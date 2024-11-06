@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from models import Trade, TimeFrame, SavingsResult, Commodity
+from models import Trade, TimeFrame, SavingsResult, Commodity, PricePoint
 from price_analytics import PriceAnalytics
 
 class SavingsCalculator:

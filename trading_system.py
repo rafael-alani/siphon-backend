@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from models import Trade, Company, TradeType, TradeStatus
+from models import Trade, Company, TradeType, TradeStatus, Commodity
 from trading_logic import TradingLogic
 
 class TradingSystem:
