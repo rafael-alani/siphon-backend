@@ -3,13 +3,26 @@ from models import Trade, Company, Commodity, TimeFrame, SavingsResult
 from trading_system import TradingSystem
 from price_analytics import PriceAnalytics
 from savings_calculator import SavingsCalculator
+from load_demo_data import load_demo_data
+from fastapi.middleware.cors import CORSMiddleware  
 import uvicorn
 import math
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:5174"],  # Add your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 trading_system = TradingSystem()
 price_analytics = PriceAnalytics()
 savings_calculator = SavingsCalculator(price_analytics)
+
+# Load demo data on startup
+load_demo_data(trading_system)
 
 @app.post("/trades")
 async def create_trade(trade: Trade):
@@ -112,6 +125,31 @@ async def get_company_savings(company_name: str, timeframe: TimeFrame):
         timeframe,
         company_name
     )
+
+@app.post("/trades/offer")
+async def create_offer(trade: Trade):
+    if trade.type != TradeType.SELL:
+        raise HTTPException(status_code=400, detail="Trade must be of type SELL for offers")
+    trading_system.add_trade(trade)
+    return {"status": "success", "trade": trade}
+
+@app.post("/trades/request")
+async def create_request(trade: Trade):
+    if trade.type != TradeType.BUY:
+        raise HTTPException(status_code=400, detail="Trade must be of type BUY for requests")
+    trading_system.add_trade(trade)
+    return {"status": "success", "trade": trade}
+
+@app.get("/companies")
+async def get_companies():
+    return trading_system.get_all_companies()
+
+@app.delete("/companies/{name}")
+async def delete_company(name: str):
+    if name not in trading_system.companies:
+        raise HTTPException(status_code=404, detail="Company not found")
+    del trading_system.companies[name]
+    return {"status": "success", "message": f"Company {name} deleted"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

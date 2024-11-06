@@ -67,3 +67,7 @@ class TradingSystem:
             "lowest_offer": lowest_offer,
             "highest_request": highest_request
         }
+
+    def remove_company(self, name: str) -> None:
+        if name in self.companies:
+            del self.companies[name]

@@ -45,6 +45,14 @@ class Trade(BaseModel):
     time: Optional[datetime] = None
     requester_company: str
     fulfiller_company: Optional[str] = None
+    
+    def __eq__(self, other):
+        if not isinstance(other, Trade):
+            return False
+        return self.id == other.id
+
+    def __hash__(self):
+        return hash(self.id)
 
 class ResourceState(BaseModel):
     commodity: Commodity

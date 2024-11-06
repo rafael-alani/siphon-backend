@@ -1,0 +1,134 @@
+[
+  {
+    "name": "EcoGrid Solutions",
+    "location": "Amsterdam",
+    "statuses": [
+      {
+        "commodity": "Electricity",
+        "status": "surplus",
+        "amount": {
+          "value": 500,
+          "measurement_unit": "MWh"
+        }
+      },
+      {
+        "commodity": "Heat",
+        "status": "deficit",
+        "amount": {
+          "value": 200,
+          "measurement_unit": "GJ"
+        }
+      }
+    ]
+  },
+  {
+    "name": "GreenHydro Corp",
+    "location": "Berlin",
+    "statuses": [
+      {
+        "commodity": "Hydrogen",
+        "status": "surplus",
+        "amount": {
+          "value": 300,
+          "measurement_unit": "kg"
+        }
+      },
+      {
+        "commodity": "Electricity",
+        "status": "deficit",
+        "amount": {
+          "value": 400,
+          "measurement_unit": "MWh"
+        }
+      }
+    ]
+  },
+  {
+    "name": "SolarTech Industries",
+    "location": "Barcelona",
+    "statuses": [
+      {
+        "commodity": "Electricity",
+        "status": "surplus",
+        "amount": {
+          "value": 800,
+          "measurement_unit": "MWh"
+        }
+      },
+      {
+        "commodity": "Gas",
+        "status": "deficit",
+        "amount": {
+          "value": 150,
+          "measurement_unit": "MMBtu"
+        }
+      }
+    ]
+  },
+  {
+    "name": "WindPower Dynamics",
+    "location": "Copenhagen",
+    "statuses": [
+      {
+        "commodity": "Electricity",
+        "status": "surplus",
+        "amount": {
+          "value": 600,
+          "measurement_unit": "MWh"
+        }
+      },
+      {
+        "commodity": "Heat",
+        "status": "surplus",
+        "amount": {
+          "value": 250,
+          "measurement_unit": "GJ"
+        }
+      }
+    ]
+  },
+  {
+    "name": "ThermalEnergy Plus",
+    "location": "Vienna",
+    "statuses": [
+      {
+        "commodity": "Heat",
+        "status": "surplus",
+        "amount": {
+          "value": 450,
+          "measurement_unit": "GJ"
+        }
+      },
+      {
+        "commodity": "Gas",
+        "status": "surplus",
+        "amount": {
+          "value": 200,
+          "measurement_unit": "MMBtu"
+        }
+      }
+    ]
+  },
+  {
+    "name": "HydrogenTech Solutions",
+    "location": "Stockholm",
+    "statuses": [
+      {
+        "commodity": "Hydrogen",
+        "status": "surplus",
+        "amount": {
+          "value": 500,
+          "measurement_unit": "kg"
+        }
+      },
+      {
+        "commodity": "Electricity",
+        "status": "deficit",
+        "amount": {
+          "value": 300,
+          "measurement_unit": "MWh"
+        }
+      }
+    ]
+  }
+]
