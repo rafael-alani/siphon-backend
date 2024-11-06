@@ -1,0 +1,7 @@
+{
+  "name": "trading-api",
+  "private": true,
+  "scripts": {
+    "start": "python main.py"
+  }
+}
