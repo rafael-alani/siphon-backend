@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import List
 import random
+import math
 from models import Trade, PricePoint, Commodity, TimeFrame
 
 class PriceAnalytics:
@@ -51,6 +52,7 @@ class PriceAnalytics:
             ]
 
             if period_trades:
+                # Use the raw price values from trades
                 avg_price = sum(t.price.value for t in period_trades) / len(period_trades)
                 price_points.append(PricePoint(
                     timestamp=current_time,
@@ -58,32 +60,5 @@ class PriceAnalytics:
                 ))
 
             current_time = next_time
-
-        return price_points
-
-    def get_market_prices(
-        self,
-        commodity: Commodity,
-        timeframe: TimeFrame
-    ) -> List[PricePoint]:
-        cutoff_time = datetime.now() - self.get_time_delta(timeframe)
-        current_time = cutoff_time
-        price_points = []
-        base_price = 100  # Starting base price
-
-        while current_time <= datetime.now():
-            # Create some price volatility using sine wave and random factors
-            hours_passed = (current_time - cutoff_time).total_seconds() / 3600
-            volatility = (1 + 0.1 * random.random()) * (1 + 0.05 * 
-                        math.sin(hours_passed * math.pi / 12))  # 12-hour cycle
-            
-            market_price = base_price * volatility * self.MARKET_MULTIPLIERS[commodity]
-            
-            price_points.append(PricePoint(
-                timestamp=current_time,
-                price=market_price
-            ))
-            
-            current_time += timedelta(hours=3)  # 3-hour intervals
 
         return price_points
