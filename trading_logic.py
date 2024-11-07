@@ -23,6 +23,7 @@ class TradingLogic:
         offers_to_remove = set()
         requests_to_remove = set()
 
+
         for offer in sorted_offers:
             if offer in offers_to_remove:
                 continue
@@ -36,7 +37,13 @@ class TradingLogic:
                     continue
 
                 # Check if price is compatible
-                if request.price.value < offer.price.value:
+                if request.price.value / request.amount.value < offer.price.value / offer.amount.value:
+                    continue
+
+                if offer.requester_company == request.requester_company:
+                    continue
+
+                if offer.status == TradeStatus.COMPLETED or request.status == TradeStatus.COMPLETED:
                     continue
 
                 current_time = datetime.now()
@@ -51,6 +58,7 @@ class TradingLogic:
                     
                     # Update offer amount
                     offer.amount.value -= request.amount.value
+                    # offer.price.value = offer.price.value * (offer.amount.value - request.amount.value) / offer.amount.value
 
                 elif request.amount.value > offer.amount.value:
                     # Complete the offer
@@ -61,6 +69,7 @@ class TradingLogic:
                     
                     # Update request amount
                     request.amount.value -= offer.amount.value
+                    # request.price.value = request.price.value * (request.amount.value - offer.amount.value) / request.amount.value
 
                 else:  # Equal amounts
                     # Complete both trades
