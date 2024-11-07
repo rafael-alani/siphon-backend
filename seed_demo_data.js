@@ -103,32 +103,32 @@ const companies = [
 // Commodity configurations
 const commodityConfigs = {
   Electricity: {
-    basePrice: 80,
+    basePrice: 27,
     unit: "MWh",
     volatility: 0.25,
     seasonalImpact: 0.2,
-    trendFactor: 11.2,
+    trendFactor: 3,
   },
   Hydrogen: {
-    basePrice: 10,
+    basePrice: 6,
     unit: "kg",
     volatility: 0.35,
     seasonalImpact: 0.1,
-    trendFactor: 11.5,
+    trendFactor: 3,
   },
   Heat: {
-    basePrice: 30,
+    basePrice: 46.7,
     unit: "GJ",
     volatility: 0.2,
     seasonalImpact: 0.3,
-    trendFactor: 11.0,
+    trendFactor: 3,
   },
   Gas: {
-    basePrice: 20,
+    basePrice: 8,
     unit: "MMBtu",
     volatility: 0.3,
     seasonalImpact: 0.25,
-    trendFactor: 11.3,
+    trendFactor: 3,
   },
 };
 
@@ -136,17 +136,17 @@ const commodityConfigs = {
 function generatePrice(commodity, date) {
   const config = commodityConfigs[commodity];
 
-  // Calculate days since start of the year for trend
-  const startOfYear = new Date(date.getFullYear(), 0, 1);
-  const daysSinceStart = (date - startOfYear) / (1000 * 60 * 60 * 24);
+  const today = new Date();
 
-  // Enhanced trend calculation - more pronounced upward trend
-  const yearProgress = daysSinceStart / 365;
-  const trendImpact = yearProgress * 100 * config.trendFactor;
+  const daysSinceToday = (date - today) / (1000 * 60 * 60 * 24);
+
+  // Normalize the trend so it increases as we approach today
+  const yearProgress = Math.abs(daysSinceToday) / 365;
+  const trendImpact = (1 - yearProgress) * config.trendFactor;
 
   // Seasonal variation (sine wave throughout the year)
-  const seasonalFactor =
-    Math.sin(((date.getMonth() + 1) * Math.PI) / 6) * config.seasonalImpact;
+  // const seasonalFactor =
+  //   Math.sin(((date.getMonth() + 1) * Math.PI) / 6) * config.seasonalImpact;
 
   // Random volatility
   const randomFactor = (Math.random() - 0.5) * 2 * config.volatility;
@@ -155,8 +155,8 @@ function generatePrice(commodity, date) {
   const trendedBasePrice = config.basePrice * (1 + trendImpact);
 
   // Apply seasonal and random factors to trended base price
-  // let price = trendedBasePrice * (1 + seasonalFactor + randomFactor);
-  let price = trendedBasePrice;
+  let price = trendedBasePrice * (1 + randomFactor);
+  // let price = trendedBasePrice;
 
   // Add occasional price spikes (5% chance)
   if (Math.random() < 0.05) {

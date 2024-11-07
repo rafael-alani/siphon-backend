@@ -2,6 +2,7 @@
   "name": "trading-api",
   "private": true,
   "scripts": {
-    "start": "python main.py"
+    "start": "python main.py",
+    "dev": "node seed_demo_data.js && python main.py"
   }
 }
