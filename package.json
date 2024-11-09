@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "python main.py",
-    "dev": "node seed_demo_data.js && python main.py"
+    "dev": "node seed_demo_data.js && python main.py",
+    "install-requirements": "pip install -r requirements.txt"
   }
 }
