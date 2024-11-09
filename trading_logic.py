@@ -3,6 +3,9 @@ from typing import List
 from models import Trade, TradeStatus
 
 class TradingLogic:
+    def __init__(self, led_controller=None):
+        self.led_controller = led_controller
+
     def sort_request_list(self, requests: List[Trade]) -> List[Trade]:
         """Sort requests by price in descending order (highest first)"""
         return sorted(requests, key=lambda x: x.price.value, reverse=True)
@@ -60,6 +63,10 @@ class TradingLogic:
                     offer.amount.value -= request.amount.value
                     # offer.price.value = offer.price.value * (offer.amount.value - request.amount.value) / offer.amount.value
 
+                    # Visualize the trade
+                    if self.led_controller:
+                        self.led_controller.visualize_trade(offer, request)
+
                 elif request.amount.value > offer.amount.value:
                     # Complete the offer
                     offer.status = TradeStatus.COMPLETED
@@ -71,6 +78,10 @@ class TradingLogic:
                     request.amount.value -= offer.amount.value
                     # request.price.value = request.price.value * (request.amount.value - offer.amount.value) / request.amount.value
 
+                    # Visualize the trade
+                    if self.led_controller:
+                        self.led_controller.visualize_trade(offer, request)
+
                 else:  # Equal amounts
                     # Complete both trades
                     offer.status = TradeStatus.COMPLETED
@@ -80,6 +91,10 @@ class TradingLogic:
                     trading_system.trade_history.extend([offer, request])
                     offers_to_remove.add(offer)
                     requests_to_remove.add(request)
+
+                    # Visualize the trade
+                    if self.led_controller:
+                        self.led_controller.visualize_trade(offer, request)
 
         # Remove completed trades from original lists
         trading_system.offers = [

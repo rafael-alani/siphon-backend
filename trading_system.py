@@ -37,9 +37,9 @@ class TradingSystem:
         return self.companies.get(name)
 
     def get_all_companies(self) -> List[Company]:
-        return list(self.companies.values())
 
     def find_matching_trades(self, commodity: Commodity) -> dict:
+        return list(self.companies.values())
         """
         Find the lowest offer price and highest request price for a given commodity
         """

@@ -7,6 +7,7 @@ from load_demo_data import load_demo_data
 from fastapi.middleware.cors import CORSMiddleware  
 import uvicorn
 import math
+from led_controller import LEDController
 
 app = FastAPI()
 app.add_middleware(
@@ -17,12 +18,20 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-trading_system = TradingSystem()
+# Initialize LED controller
+led_controller = LEDController()
+
+# Initialize trading system with LED controller
+trading_system = TradingSystem(led_controller=led_controller)
+
 price_analytics = PriceAnalytics()
 savings_calculator = SavingsCalculator(price_analytics)
 
 # Load demo data on startup
 load_demo_data(trading_system)
+
+# After loading demo data, assign LEDs to companies
+led_controller.assign_company_leds(trading_system.companies)
 
 @app.post("/trades")
 async def create_trade(trade: Trade):
