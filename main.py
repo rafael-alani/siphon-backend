@@ -18,8 +18,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-# Initialize LED controller
-led_controller = LEDController()
+# Initialize LED controller in development mode
+led_controller = LEDController(is_dev_mode=True)
 
 # Initialize trading system with LED controller
 trading_system = TradingSystem(led_controller=led_controller)

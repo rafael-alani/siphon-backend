@@ -1,14 +1,15 @@
 from typing import List, Dict, Optional
 from models import Trade, Company, TradeType, TradeStatus, Commodity
 from trading_logic import TradingLogic
+from led_controller import LEDController
 
 class TradingSystem:
-    def __init__(self):
+    def __init__(self, led_controller: Optional[LEDController] = None):
         self.offers: List[Trade] = []
         self.requests: List[Trade] = []
         self.trade_history: List[Trade] = []
         self.companies: Dict[str, Company] = {}
-        self.trading_logic = TradingLogic()
+        self.trading_logic = TradingLogic(led_controller=led_controller)
 
     def add_trade(self, trade: Trade) -> None:
         if trade.status == TradeStatus.PENDING:
