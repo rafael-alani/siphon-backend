@@ -30,7 +30,6 @@ class LEDController:
         if not is_dev_mode:
             try:
                 import board
-                import p9813
                 self.pin_clk = board.D13
                 self.pin_data = board.D10
                 self.serial = serial.Serial('/dev/ttyACM0', 9600)  # Adjust port as needed
@@ -47,8 +46,9 @@ class LEDController:
         if self.is_dev_mode:
             self.leds = MockLEDStrip(self.num_leds)
         else:
-            import p9813
-            self.leds = p9813.P9813(self.pin_clk, self.pin_data, self.num_leds)
+            # import micropython-p9813
+            # self.leds = p9813.P9813(self.pin_clk, self.pin_data, self.num_leds)
+            console.log("goofed")
         
         self.leds.reset()
         

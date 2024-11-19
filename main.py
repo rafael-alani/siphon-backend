@@ -12,7 +12,7 @@ from led_controller import LEDController
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174"],  # Add your frontend URL
+    allow_origins=["http://localhost:5173", "http://localhost:5174", "https://siphon-demo.netlify.app/", "https://siphon.netlify.app/"],  # Add your frontend URL
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
